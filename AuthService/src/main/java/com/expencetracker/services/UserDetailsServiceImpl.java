@@ -7,6 +7,7 @@ import com.expencetracker.modals.UserInfoDto;
 import com.expencetracker.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,6 +22,7 @@ import java.util.UUID;
 
 @Component
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
@@ -29,6 +31,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private UserInfoProducer userInfoProducer;
+
+    public UserDetailsServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     @Transactional(readOnly = true)
